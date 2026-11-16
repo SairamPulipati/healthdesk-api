@@ -21,8 +21,34 @@
             <i class="bi bi-heart-pulse-fill text-danger fs-4"></i>
             <span>HealthDesk <span class="text-secondary fw-normal fs-6">| Clinical HIMS</span></span>
         </a>
+        @auth
+            <ul class="navbar-nav me-auto ms-4 gap-2">
+                @if(auth()->user()->isAdmin())
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold text-dark {{ request()->is('admin/dashboard*') ? 'active fw-bold' : '' }}" href="{{ route('admin.dashboard') }}">
+                            <i class="bi bi-speedometer2 me-1"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold text-dark {{ request()->is('admin/staff*') ? 'active fw-bold' : '' }}" href="{{ route('admin.staff.index') }}">
+                            <i class="bi bi-person-badge-fill me-1"></i> Staff Directory
+                        </a>
+                    </li>
+                @endif
+                @if(in_array(auth()->user()->role, ['admin', 'receptionist', 'doctor', 'nurse']))
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold text-primary {{ request()->is('patients*') ? 'active fw-bold' : '' }}" href="{{ route('patients.index') }}">
+                            <i class="bi bi-people-fill me-1"></i> Patient Master
+                        </a>
+                    </li>
+                @endif
+            </ul>
+        @endauth
         <div class="d-flex align-items-center gap-3 ms-auto">
             @auth
+                <a href="{{ route('profile.edit') }}" class="btn btn-outline-secondary btn-sm py-1" title="Account & Security Settings">
+                    <i class="bi bi-gear me-1"></i> My Profile
+                </a>
                 <div class="d-flex align-items-center gap-2">
                     <span class="small fw-bold text-dark">{{ auth()->user()->name }}</span>
                     @if(auth()->user()->role === 'doctor')

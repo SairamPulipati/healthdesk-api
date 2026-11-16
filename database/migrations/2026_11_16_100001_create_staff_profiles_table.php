@@ -16,7 +16,11 @@ return new class extends Migration
             $table->string('specialization')->nullable();
             $table->decimal('consultation_fee', 8, 2)->default(0.00);
             $table->string('phone')->nullable();
+            $table->date('date_of_birth')->nullable();
+            $table->string('address')->nullable();
+            $table->string('city', 100)->nullable();
             $table->boolean('is_on_duty')->default(true);
+            $table->enum('employment_status', ['active', 'on_leave', 'resigned', 'terminated'])->default('active');
             $table->timestamps();
         });
     }

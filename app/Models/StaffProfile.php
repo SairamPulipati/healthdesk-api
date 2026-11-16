@@ -13,7 +13,17 @@ class StaffProfile extends Model
         'specialization',
         'consultation_fee',
         'phone',
+        'date_of_birth',
+        'address',
+        'city',
         'is_on_duty',
+        'employment_status',
+    ];
+
+    protected $casts = [
+        'date_of_birth' => 'date',
+        'is_on_duty' => 'boolean',
+        'consultation_fee' => 'float',
     ];
 
     public function user()
